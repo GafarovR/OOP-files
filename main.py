@@ -67,4 +67,36 @@ def get_shop_list_by_dishes(dishes, person_count):
 
 # print(get_data('recipes.txt'))
 
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Жареный картофель'], 2))
+# print(get_shop_list_by_dishes(['Запеченный картофель', 'Жареный картофель'], 2))
+
+def read_write(*filenames):
+    all_lines = []
+    name = []
+    counter = 0
+    for f in filenames:
+        with open(f, encoding='utf-8') as file:
+            name.append(f)
+            lines = file.readlines()
+            count = len(lines)
+            lines.extend(name)
+            name.clear()
+        all_lines.append(lines)
+    all_lines = sorted(all_lines, key=len)
+
+    with open('all_lines.txt', 'w', encoding='utf-8') as file:
+        for element in all_lines:
+            n = 0
+            line = element[-1]
+            file.write(f'{line}\n')
+            del element[-1]
+            file.write(f'{len(element)}\n')
+            for el in element:
+                if n < len(element):
+                    file.write(f'{el.strip()}\n')
+                    n += 1
+                else:
+                    n = 0
+
+    return file
+
+read_write('1.txt', '2.txt', '3.txt')
